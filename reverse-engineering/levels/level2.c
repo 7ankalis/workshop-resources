@@ -1,0 +1,26 @@
+// level2.c - single-byte XOR encrypted flag (decryption included)
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+/* Encrypted bytes: XOR with 0xAB */
+uint8_t enc2[] = {
+    0xF8, 0xCE, 0xC8, 0xDE, 0xD9, 0xC2, 0xC5, 0xCE, 0xDF, 0xD8, 0xEE, 0xE5,
+    0xE2, 0xFF, 0xD0, 0xC7, 0x98, 0xCA, 0xC7, 0xCA, 0xC6, 0xF4, 0xC5, 0xC4,
+    0xDE, 0xC6, 0xD9, 0xC4, 0xDE, 0xF4, 0xDF, 0xC3, 0xC5, 0xC2, 0xC5, 0xD6
+};
+static const size_t n_enc2 = 36;
+static const uint8_t key2 = 0xAB;
+
+int main(void) {
+    char *s = malloc(n_enc2 + 1);
+    if (!s) return 1;
+    for (size_t i = 0; i < n_enc2; ++i) {
+        s[i] = (char)(enc2[i] ^ key2);
+    }
+    s[n_enc2] = '\0';
+    printf("Decrypted flag: %s\n", s);
+    free(s);
+    return 0;
+}
+
